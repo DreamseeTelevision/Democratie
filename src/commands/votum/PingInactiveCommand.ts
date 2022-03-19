@@ -7,24 +7,27 @@ export default class PingInactiveCommand extends Command {
     super(client, {
       name: "pinginactive",
       aliases: [
+	"chomeurs",
+	"flemmards",
+	"absents",
         "pingremaining",
         "mentionremaining",
         "alertothers",
         "lazyvoters",
       ],
       description:
-        "Mention the remaining councilmembers who haven't voted yet.",
+        "Mentionne les membres du conseil qui n'ont pas voté.",
       adminsAlwaysAllowed: true
     })
   }
 
   async execute(msg: CommandoMessage, args: any): Promise<Message | Message[]> {
     if (this.council.currentMotion == null) {
-      return msg.reply("There is no motion active.")
+      return msg.reply("Il y a actuellement aucune motion active.")
     }
 
     return msg.reply(
-      "These councilors still need to vote:\n\n" +
+      "Ces membres du conseil doivent voter :\n\n" +
         this.council.currentMotion.getRemainingVoters().array().join(" ")
     )
   }

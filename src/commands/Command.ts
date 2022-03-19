@@ -95,14 +95,14 @@ export default class Command extends Commando.Command {
       const reply = this.execute(msg, args, fromPattern)
 
       if (reply == null) {
-        return msg.reply("Command executed.")
+        return msg.reply("Commande exécutée.")
       }
 
       return reply as Promise<Message | Message[]>
     } catch (e) {
       console.error(e)
 
-      return msg.reply("Sorry, an error occurred executing the command.")
+      return msg.reply("Désolé, une erreur est survenue à l'exécution de cette commande.")
     }
   }
 }

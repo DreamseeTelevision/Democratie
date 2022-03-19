@@ -34,20 +34,20 @@ export default class ConfigCommand extends Command {
     super(client, {
       name: "config",
       aliases: ["votumconfig", "cfg", "vconfig", "vcfg", "councilconfig"],
-      description: "Designates a specific role for councilors.",
+      description: "Désignes un rôle spécifique pour le(s) président(s) du conseil.",
       adminOnly: true,
 
       args: [
         {
           key: "key",
-          prompt: "Which configuration point would you like to change?",
+          prompt: "Quel configuration voulez-vous changer ?",
           type: "string",
           default: "",
         },
         {
           key: "value",
           prompt:
-            "What value would you like to set this configuration point to?",
+            "Quel valeur voulez-vous mettre à cette configuration ?",
           type: "string",
           default: "",
         },
@@ -63,7 +63,7 @@ export default class ConfigCommand extends Command {
       return msg.reply(
         response(
           ResponseType.Neutral,
-          `Available configuration points are:\n${Object.keys(
+          `Configurations disponibles :\n${Object.keys(
             getProps(ConfigurableCouncilData)
           )
             .map((n) => `~${n}~`)
@@ -80,7 +80,7 @@ export default class ConfigCommand extends Command {
       return msg.reply(
         response(
           ResponseType.Bad,
-          `:x: \`${key}\` is not a valid configuration point.`
+          `:x: \`${key}\` est pas une configuration valide.`
         )
       )
     }
@@ -92,7 +92,7 @@ export default class ConfigCommand extends Command {
       return msg.reply(
         response(
           ResponseType.Neutral,
-          `Configuration point ${args.key} is currently set to ~${display(
+          `La configuration ${args.key} est actuellement paramétré sur ~${display(
             this.council.getConfig(key)
           )}~.`
         )
@@ -104,7 +104,7 @@ export default class ConfigCommand extends Command {
       return msg.reply(
         response(
           ResponseType.Neutral,
-          `Set configuration point ~${key}~ back to default state.`
+          `La configuration ~${key}~ est désormais mis sur la valeur par défaut.`
         )
       )
     }
@@ -119,14 +119,14 @@ export default class ConfigCommand extends Command {
       return msg.reply(
         response(
           ResponseType.Good,
-          `Set configuration point ~${key}~ to ${display(value)}`
+          `La configuration ~${key}~ est désormais ${display(value)}`
         )
       )
     } else {
       return msg.reply(
         response(
           ResponseType.Bad,
-          `~${args.value}~ is not a valid **${serializer.type}**`
+          `~${args.value}~ est un invalide **${serializer.type}**`
         )
       )
     }

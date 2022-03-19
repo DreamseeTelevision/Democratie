@@ -10,7 +10,7 @@ export default class MotionCommand extends Command {
     super(client, {
       name: "motion",
       aliases: ["propose", "proposal", "call"],
-      description: "Create a motion",
+      description: "Créer une motion",
 
       allowWithConfigurableRoles: ["proposeRole"],
       adminsAlwaysAllowed: true,
@@ -18,7 +18,7 @@ export default class MotionCommand extends Command {
       args: [
         {
           key: "text",
-          prompt: "The text of the motion to propose.",
+          prompt: "Le texte du motion à proposer.",
           type: "string",
           default: "",
         },
@@ -34,7 +34,7 @@ export default class MotionCommand extends Command {
         return this.council.currentMotion.postMessage()
       } else {
         return msg.reply(
-          "There is no active motion. Run `!motion <text>` to start one."
+          "Aucune motion est active. Fait `!motion <texte>` pour créer une."
         )
       }
     }
@@ -50,41 +50,41 @@ export default class MotionCommand extends Command {
           motion.resolve(MotionResolution.Killed)
           return motion.postMessage()
         } else {
-          return msg.reply("You don't have permission to kill this motion.")
+          return msg.reply("Tu as pas la permission de tuer cette motion.")
         }
       }
 
       if (!this.council.getConfig("motionQueue")) {
-        return msg.reply("There is already an active motion.")
+        return msg.reply("Il y a déjà actuellement une motion active.")
       }
     }
 
     if (args.text === "kill") {
-      return msg.reply("There is no motion active.")
+      return msg.reply("Il y a aucune motion actif.")
     }
 
     if (this.council.getConfig("councilorMotionDisable")) {
-      return msg.reply("Creating motions is disabled in this council.")
+      return msg.reply("La création de motions est désactivée dans ce conseil.")
     }
 
     const proposeRole = this.council.getConfig("proposeRole")
     if (proposeRole && !msg.member.roles.cache.has(proposeRole)) {
-      return msg.reply("You don't have permission to propose motions.")
+      return msg.reply("Tu as pas les permissions de proposer une motion.")
     }
 
     if (args.text.length > 2000) {
       return msg.reply(
-        "Your motion is too long. The maximum length is 2000 characters."
+        "Ta motion est trop longue. La taille limite est de 2000 caractères."
       )
     }
 
     if (this.council.isUserOnCooldown(msg.author.id)) {
       return msg.reply(
-        `You must wait ${+(this.council.userCooldown / 3600000).toFixed(
+        `Tu dois attendre ${+(this.council.userCooldown / 3600000).toFixed(
           2
-        )} hours between motions. (${+(
+        )} heures entre chaque motions. (${+(
           this.council.getUserCooldown(msg.author.id) / 3600000
-        ).toFixed(2)} hours left)`
+        ).toFixed(2)} heures restants)`
       )
     }
 
@@ -135,7 +135,7 @@ export default class MotionCommand extends Command {
       return msg.reply(
         response(
           ResponseType.Good,
-          "Your motion has been queued and will begin after the current motion."
+          "Ta motion est en attente et sera proposée après la motion actuelle."
         )
       )
     }

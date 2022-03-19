@@ -7,13 +7,13 @@ export default class AbstainCommand extends VoteAliasCommand {
   constructor (client: CommandoClient) {
     super(client, {
       name: 'abstain',
-      aliases: ['abs', 'sitout', 'sit-out'],
-      description: 'Abstain on a motion',
+      aliases: ['blanc', 'abs', 'sitout', 'sit-out'],
+      description: 'Voter blanc sur une motion',
 
       args: [
         {
           key: 'reason',
-          prompt: 'The reason for the vote',
+          prompt: 'Raison pour ce vote',
           type: 'string',
           default: ''
         }

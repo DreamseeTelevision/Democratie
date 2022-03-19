@@ -7,13 +7,13 @@ export default class YesCommand extends VoteAliasCommand {
   constructor (client: CommandoClient) {
     super(client, {
       name: 'yes',
-      aliases: ['aye', 'si', 'yea', 'yay', 'ja', 'oui', 'da', 'да'],
-      description: 'Vote yes on a motion',
+      aliases: ['pour', 'aye', 'si', 'yea', 'yay', 'ja', 'oui', 'da', 'да'],
+      description: 'Votes oui',
 
       args: [
         {
           key: 'reason',
-          prompt: 'The reason for the vote',
+          prompt: 'La raison pour ce vote',
           type: 'string',
           default: ''
         }

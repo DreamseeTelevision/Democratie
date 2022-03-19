@@ -14,7 +14,7 @@
         "properties": {
           "atMajority": {
             "type": "number",
-            "title": "At this majority:",
+            "title": "A la majorité :",
             "default": 0,
             "minimum": 0,
             "maximum": 1,
@@ -35,7 +35,7 @@
           },
           "to": {
             "type": "string",
-            "title": "Council ID",
+            "title": "Conseil ID",
             "default": "",
             "examples": [
               "000232302323032300"

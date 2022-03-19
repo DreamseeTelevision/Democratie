@@ -5,16 +5,16 @@ import Command from "../Command"
 export default class CouncilCommand extends Command {
   constructor(client: CommandoClient) {
     super(client, {
-      name: "council",
+      name: "conseil",
       description:
-        "Designates the channel this command is run in as a council channel.",
+        "Désigne un salon pour le conseil.",
       councilOnly: false,
       adminOnly: true,
 
       args: [
         {
           key: "name",
-          prompt: 'The name of this council, or "remove" to remove.',
+          prompt: 'Le nom du conseil, ou "remove" pour supprimer.',
           type: "string",
           default: "Council",
         },
@@ -27,25 +27,25 @@ export default class CouncilCommand extends Command {
       if (this.council.enabled) {
         this.council.enabled = false
         return msg.reply(
-          `Removed council "${this.council.name}". (Note: Settings are still saved if you ever enable a council in this channel again.)`
+          `Conseil supprimé "${this.council.name}". (Note: Les paramètes restent sauvegardés si tu ouvres de nouveau un conseil ici.)`
         )
       } else {
-        return msg.reply("There is no council enabled in this channel.")
+        return msg.reply("Il y a aucun conseil activé dans ce salon.")
       }
     }
 
     if (this.council.enabled) {
       if (this.council.name !== args.name) {
         this.council.name = args.name
-        return msg.reply(`Changed this council's name to "${args.name}"`)
+        return msg.reply(`Le nom du conseil a été modifié pour "${args.name}"`)
       } else {
-        return msg.reply(`This council already exists.`)
+        return msg.reply(`Ce conseil existe déjà.`)
       }
     } else {
       this.council.enabled = true
       this.council.name = args.name
 
-      return msg.reply(`Created council "${args.name}"`)
+      return msg.reply(`Conseil "${args.name}" a été créé.`)
     }
   }
 }

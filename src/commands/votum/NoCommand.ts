@@ -7,13 +7,13 @@ export default class NoCommand extends VoteAliasCommand {
   constructor (client: CommandoClient) {
     super(client, {
       name: 'no',
-      aliases: ['nay', 'negative', 'nope', 'nein', 'ne', 'не'],
-      description: 'Vote no on a motion',
+      aliases: ['contre', 'non', 'nay', 'negative', 'nope', 'nein', 'ne', 'не'],
+      description: 'Votes non',
 
       args: [
         {
           key: 'reason',
-          prompt: 'The reason for the vote',
+          prompt: 'La raison pour ce vote',
           type: 'string',
           default: ''
         }
