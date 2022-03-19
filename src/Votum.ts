@@ -43,7 +43,7 @@ class Votum {
     this.registerCommands()
 
     this.bot.on("ready", () => {
-      console.log("Votum is ready.")
+      console.log("La démocratie est LÀ.")
 
       this.setActivity()
       setInterval(this.setActivity.bind(this), 1000000)
@@ -64,7 +64,7 @@ class Votum {
     const channel = this.bot.channels.cache.get(id)
 
     if (channel == null) {
-      throw new Error("Channel doesn't exist.")
+      throw new Error("Ce salon existe pas.")
     }
 
     const council = new Council(channel as Discord.TextChannel)
@@ -74,7 +74,7 @@ class Votum {
   }
 
   private setActivity(): void {
-    this.bot.user?.setActivity("http://eryn.io/Votum")
+    this.bot.user?.setActivity("voter bordel")
   }
 
   private registerCommands(): void {
