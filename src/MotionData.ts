@@ -39,7 +39,7 @@ export const MotionMajorityType = new t.Type(
           .decode(Number(str.substr(0, str.length - 1)))
           .chain((number) => {
             if (Number.isNaN(number) || number < 0 || number > 100) {
-              return t.failure(i, c, "Invalid percentage: must be 0-100")
+              return t.failure(i, c, "Pourcentage invalide: il doit être entre 0-100")
             } else {
               return t.success(number / 100)
             }
