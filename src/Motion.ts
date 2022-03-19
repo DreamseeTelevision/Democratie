@@ -206,15 +206,15 @@ export default class Motion {
     const votes = this.getVotes()
 
     const header = [
-      `Council: ${this.council.name}`,
-      `Date: ${new Date().toISOString()}`,
-      `Motion: #${this.number}`,
-      `Resolution: ${MotionResolution[this.resolution]}`,
-      `Proposed by: ${this.authorName}`,
+      `Conseil : ${this.council.name}`,
+      `Date : ${new Date().toISOString()}`,
+      `Motion : #${this.number}`,
+      `Resolution : ${MotionResolution[this.resolution]}`,
+      `Proposé par : ${this.authorName}`,
       "",
-      `For: ${votes.yes}`,
-      `Against: ${votes.no}`,
-      `Abstain: ${votes.abs}`,
+      `Pour : ${votes.yes}`,
+      `Contre : ${votes.no}`,
+      `Blanc : ${votes.abs}`,
       "",
       "#".repeat(50),
       "",
@@ -343,16 +343,16 @@ export default class Motion {
     let title = `#${this.number} | `
     if (this.data.active) {
       if (text === true) {
-        title += "New motion proposed" + type
+        title += "Nouvelle motion proposée" + type
       } else {
-        title += "Currently active motion" + type
+        title += "Motion actuellement active" + type
       }
     } else if (this.data.resolution === MotionResolution.Passed) {
-      title += "Motion Passed" + type
+      title += "Motion Adoptée" + type
     } else if (this.data.resolution === MotionResolution.Killed) {
-      title += "Motion Killed"
+      title += "Motion Stoppée"
     } else {
-      title += "Motion Failed"
+      title += "Motion Rejetée"
     }
 
     const votes = text === true ? "" : "\n\n" + this.getVotesAsEmoji()
@@ -460,7 +460,7 @@ export default class Motion {
 
   public resolve(resolution: MotionResolution): void {
     if (this.data.active === false) {
-      throw new Error("Attempt to resolve a resolved motion.")
+      throw new Error("Tentative de réparation d'une motion résolue.")
     }
 
     this.data.active = false
@@ -609,41 +609,41 @@ export default class Motion {
       return (
         `Results final.` +
         (this.data.voteType === LegacyMotionVoteType.Unanimous
-          ? " (Unanimous vote was required)"
+          ? " (Vote unanime est nécessaire)"
           : "") +
-        (this.data.didExpire ? " (Motion expired.)" : "") +
-        (votes.dictatorVoted ? " (Dictator ended vote immediately)" : "")
+        (this.data.didExpire ? " (Motion expirée.)" : "") +
+        (votes.dictatorVoted ? " (Dictateur a terminé immédiatement le vote)" : "")
       )
     }
 
     if (votes.yes === votes.no && this.isExpired) {
-      return `The motion is expired, but is tied. The next vote will close the motion.`
+      return `Cette motion est expirée, mais le résultat est ex aequo. Le prochain vote va terminer cette motion.`
     } else if (votes.yes === 0 && votes.no === 0) {
-      return `This motion requires ${votes.toPass} vote${
+      return `Cette motion a besoin de ${votes.toPass} vote${
         votes.toPass === 1 ? "" : "s"
-      } to pass or fail.`
+      } pour être Adoptée ou Rejetée.`
     } else if (
       (votes.yes >= votes.no && votes.yes >= votes.toPass) ||
       (votes.no >= votes.yes && votes.no >= votes.toPass)
     ) {
-      return `This motion has reached the required majority, but is being held until all councilors have voted.`
+      return `Cette motion a atteint la majorité requise, mais elle est retenue jusqu’à ce que tous les votants aient voté.`
     } else if (votes.yes >= votes.no) {
-      return `With ${votes.toPass - votes.yes} more vote${
+      return `Avec ${votes.toPass - votes.yes} votes supplémentaires${
         votes.toPass - votes.yes === 1 ? "" : "s"
-      } for this motion, it will pass.`
+      } pour cette motion, elle sera Adoptée.`
     } else if (votes.no > votes.yes) {
-      return `With ${votes.toPass - votes.no} more vote${
+      return `Avec ${votes.toPass - votes.no} votes supplémentaires${
         votes.toPass - votes.no === 1 ? "" : "s"
-      } against this motion, it will fail.`
+      } contre cette motion, elle sera Rejetée.`
     }
 
-    return `This motion requires ${votes.toPass} votes to pass or fail.`
+    return `Cette motion a besoin de ${votes.toPass} votes pour être Adoptée ou Rejetée.`
   }
 
   private getVotesAsEmoji(): string {
     const votes = this.getVotes()
 
-    return `:thumbsup: **For** ${votes.yes}\n\n:thumbsdown: **Against** ${votes.no}\n\n:flag_white: **Abstain** ${votes.abs}`
+    return `:thumbsup: **Pour** ${votes.yes}\n\n:thumbsdown: **Contre** ${votes.no}\n\n:flag_white: **Blanc** ${votes.abs}`
   }
 
   private getVotesAsFields(): EmbedField[] {
