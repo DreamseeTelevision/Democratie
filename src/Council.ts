@@ -21,6 +21,7 @@ export default class Council {
   public channel: TextChannel
   private data: CouncilData
   private dataPath: string
+  private initPromise: Promise<unknown>
 
   constructor(channel: TextChannel) {
     this.channel = channel
@@ -32,6 +33,17 @@ export default class Council {
     if (this.enabled) {
       this.backupCheck()
     }
+  }
+
+  public async initialize(): Promise<unknown> {
+    if (this.initPromise) return this.initPromise
+
+    this.initPromise = this.channel.guild.members
+      .fetch()
+      .then((members) => console.log(`fetched ${members.size} members`))
+      .catch(() => undefined)
+
+    return this.initPromise
   }
 
   public get enabled() {
@@ -211,7 +223,11 @@ export default class Council {
   public createMotion(data: MotionData): Motion {
     this.data.motions.push(data)
 
-    return new Motion(this.data.motions.length - 1, this.data.motions[this.data.motions.length - 1], this)
+    return new Motion(
+      this.data.motions.length - 1,
+      this.data.motions[this.data.motions.length - 1],
+      this
+    )
   }
 
   public exportData() {
@@ -236,7 +252,9 @@ export default class Council {
       } catch (e) {
         if (attempt > 10) {
           console.error(`Council ${this.id} data couldn't be loaded`, e)
-          throw new Error("Council data could not be loaded, perhaps it's corrupted.")
+          throw new Error(
+            "Council data could not be loaded, perhaps it's corrupted."
+          )
         }
 
         return this.loadData(attempt + 1)
@@ -253,7 +271,7 @@ export default class Council {
           }
         } catch (e) {}
 
-        for (let i = 0; i<10; i++) {
+        for (let i = 0; i < 10; i++) {
           try {
             fs.writeFileSync(
               this.dataPath,
@@ -261,7 +279,7 @@ export default class Council {
             )
 
             break
-          } catch(e) {
+          } catch (e) {
             console.error("Could not save council data", e)
           }
         }
